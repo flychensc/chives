@@ -1,0 +1,1 @@
+SQL_URL = "sqlite:///stock.db"

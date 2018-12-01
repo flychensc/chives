@@ -1,0 +1,1 @@
+SQL_URL = "mssql+pyodbc://python:python@stockDSN"
