@@ -2,6 +2,9 @@
 
 __author__ = 'Shawn Chen'
 
+import gevent.monkey
+gevent.monkey.patch_all()
+
 import logging
 import datetime
 import tushare as ts
@@ -56,10 +59,6 @@ def fund_report(year, q=2):
 
 
 if __name__ == "__main__":
-    import gevent.monkey
-
-    gevent.monkey.patch_all()
-
     # 创建logger
     logger = logging.getLogger("chives")
     logger.setLevel(logging.DEBUG)
