@@ -2,6 +2,9 @@
 
 __author__ = 'Shawn Chen'
 
+import gevent.monkey
+gevent.monkey.patch_all()
+
 import sys
 sys.path.append(".")
 
@@ -194,10 +197,6 @@ def start():
 
 
 if __name__ == "__main__":
-    import gevent.monkey
-
-    gevent.monkey.patch_all()
-
     # 创建logger
     logger = logging.getLogger("chives")
     logger.setLevel(logging.DEBUG)
