@@ -75,11 +75,11 @@ if __name__ == "__main__":
     logger.addHandler(console_handle)
 
     # 分配预案
-    profit_report('2017')
+    profit_report('2018')
     # 业绩预告
-    forecast_report(2017, 2)
+    forecast_report(2018, 4)
     # 限售股解禁
     xsg_report()
     # 基金持股
-    fund_report(2017, 2)
+    fund_report(2018, 3)
 
