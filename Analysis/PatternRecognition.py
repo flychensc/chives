@@ -44,7 +44,8 @@ def pattern_report(stock_list):
     logger.info(u"共%d只股票待处理" % len(stock_list))
 
     freeze_support()
-    pool = Pool(processes=2)
+    # workaround issue: MySQL "commands out of sync"
+    pool = Pool(processes=1)
     async_result = [pool.apply_async(_worker, (stock_id,)) for stock_id in stock_list]
     pool.close()
     pool.join()
