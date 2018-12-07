@@ -1,0 +1,1 @@
+SQL_URL = "mysql+pymysql://python:python@localhost:3306/stock?charset=utf8"

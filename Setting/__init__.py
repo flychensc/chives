@@ -1,1 +1,1 @@
-from Setting.Sqlite import SQL_URL
+from Setting.MySql import SQL_URL
