@@ -2,9 +2,6 @@
 
 __author__ = 'Shawn Chen'
 
-import gevent.monkey
-gevent.monkey.patch_all()
-
 import logging
 import datetime
 import talib
@@ -209,5 +206,9 @@ if __name__ == "__main__":
 
     stock_ids = ['601390', '601668', '600694', '600048', '601398']
     start_to_pattern(stock_ids)
+
+    import gevent.monkey
+
+    gevent.monkey.patch_all()
 
     start_to_pattern_ex(stock_ids)

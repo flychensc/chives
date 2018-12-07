@@ -2,9 +2,6 @@
 
 __author__ = 'Shawn Chen'
 
-import gevent.monkey
-gevent.monkey.patch_all()
-
 import logging
 import datetime
 import Analysis
@@ -18,6 +15,10 @@ logger = logging.getLogger("chives")
 
 
 def stocks_report(stocks, prefix='StockReport'):
+    import gevent.monkey
+
+    gevent.monkey.patch_all()
+
     logger.info(u"股票分析 - Start")
     report_sheets = list()
     report_sheets.extend(Analysis.pattern_report_ex(stocks))
