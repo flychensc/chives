@@ -11,9 +11,6 @@ def init(context):
     # 设置要操作的股票池
     update_universe(context.stocks)
 
-    #获取连接备用
-    context.cons = ts.get_apis()
-
     # 设置这个策略当中会用到的参数，在策略中可以随时调用，这个策略使用长短均线，我们在这里设定长线和短线的区间，在调试寻找最佳区间的时候只需要在这里进行数值改动
     context.SHORTPERIOD = 5
     context.LONGPERIOD = 10
@@ -160,12 +157,17 @@ def _load_historys(context):
     start_day = (start_date-timedelta(days=context.TIME_PERIOD)).strftime("%Y-%m-%d")
     end_day = end_date.strftime("%Y-%m-%d")
 
+    #获取连接备用
+    cons = ts.get_apis()
+
     context.historys = dict()
     for stock in context.stocks:
         logger.info("loading history [%(stock)s] %(start_day)s - %(end_day)s" % locals())
         code = stock[:6]
-        history = ts.bar(code, conn=context.cons, start_date=start_day, end_date=end_day)
+        history = ts.bar(code, conn=cons, adj='qfq', start_date=start_day, end_date=end_day)
         context.historys[stock] = history.drop(["code", "vol", "amount"], axis=1).sort_index()
+    # 释放，否则python无法正常退出
+    ts.close_apis(cons)
 
 
 def log_msg(op, stock, context, bar_dict):

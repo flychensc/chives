@@ -5,9 +5,6 @@ from datetime import timedelta
 from rqalpha.api import logger, update_universe, history_bars
 
 
-#获取连接备用
-CONS = ts.get_apis()
-
 def init(context):
     stock = context.run_info.benchmark
     start_date = context.run_info.start_date
@@ -27,12 +24,16 @@ def init(context):
     # 获取历史数据
     start_day = (start_date-timedelta(days=context.TIME_PERIOD/5*10)).strftime("%Y-%m-%d")
     end_day = end_date.strftime("%Y-%m-%d")
+    #获取连接备用
+    conn = ts.get_apis()
     #
-    # rqalpha没有复权
-    # his_data = ts.bar(stock[:6], conn=CONS, adj='qfq', start_date=start_day, end_date=end_day)
+    # rqalpha已经有复权了[2018/12/08]
+    # his_data = ts.bar(stock[:6], conn=conn, start_date=start_day, end_date=end_day)
     #
-    his_data = ts.bar(stock[:6], conn=CONS, start_date=start_day, end_date=end_day)
+    his_data = ts.bar(stock[:6], conn=conn, adj='qfq', start_date=start_day, end_date=end_day)
     context.ref_his_data = his_data.drop(["code", "vol", "amount"], axis=1).sort_index()
+    # 释放，否则python无法正常退出
+    ts.close_apis(conn)
 
 
 def before_trading(context):
